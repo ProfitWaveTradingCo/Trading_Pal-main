@@ -2,7 +2,6 @@ import subprocess
 import wave
 import requests
 import os
-import wave
 import boto3
 import configparser
 import winsound

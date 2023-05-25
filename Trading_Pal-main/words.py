@@ -380,7 +380,7 @@ intents = {
     "get_account_details": 1,
     "get_candlestick_data": 2,
     "get_order_book": 3,
-    "get_position_book": 4,
+    "get_position_book": 4, 
     "get_accounts": 5,
     "get_account_summary": 6,
     "get_account_instruments": 7,

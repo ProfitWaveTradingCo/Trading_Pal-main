@@ -1,4 +1,3 @@
-import subprocess
 import wave
 import requests
 import os
