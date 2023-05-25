@@ -61,7 +61,7 @@ Trading Pal will then ask for your risk management strategy. If you haven't set 
 
 ## Contributing
 
-Contributions to Trading Pal are welcome! Please see the [Contributing Guide](Trading_Pal/link-to-contributing-guide.md) for more information.
+Contributions to Trading Pal are welcome! Please see the [Trading_Pal-main\link-to-contributing-guide.md](contributing-guide) for more information.
 
 ## Security
 
@@ -71,4 +71,5 @@ Security is a top priority
 
 ## License
 
-Trading Pal is licensed under the [MIT License](link-to-license).
+Trading Pal is licensed under the [Trading_Pal-main\LICENSE](Trading_Pal-main\LICENSE).
+ 

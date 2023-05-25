@@ -16,7 +16,7 @@ config.read('config.ini')
 # Set the OpenAI API key
 OPENAI_API_KEY = config.get('API_KEYS', 'OPENAI_API_KEY')
 openai.api_key = OPENAI_API_KEY
-
+MAX_TOKENS= 3055
 # Set the base URL for the OANDA API
 BASE_URL = "https://api-fxpractice.oanda.com"
 ACCOUNT_ID  = "101-001-25836141-002"
@@ -128,9 +128,6 @@ print_with_voice(greeting_message)
 
 
 
-
-MAX_TOKENS = 3000
-
 # Function to check if user input is trading-related
 def is_trading_related(user_input):
     # Convert the user's input to lowercase
@@ -145,7 +142,6 @@ def is_trading_related(user_input):
     return False
 
    
-
 # Function to get account details
 def get_account_details(ACCOUNT_ID):
     url = f"{BASE_URL}/v3/accounts/{ACCOUNT_ID}"
@@ -622,14 +618,461 @@ while True:
         except Exception as e:
             # If there was an error getting the account changes, add that to the messages
             messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_candlestick_data":
+        try:
+            instrument = "EUR_USD"
+            granularity = "H1"
+            candlestick_data = get_candlestick_data(instrument, granularity)
+            # Add the candlestick data to the messages as a system message
+            messages.append({"role": "system", "content": f"Candlestick data: {candlestick_data}"})
+        except Exception as e:
+            # If there was an error getting the candlestick data, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_order_book":
+        try:
+            instrument = "EUR_USD"
+            order_book = get_order_book(instrument)
+            # Add the order book to the messages as a system message
+            messages.append({"role": "system", "content": f"Order book: {order_book}"})
+        except Exception as e:
+            # If there was an error getting the order book, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_position_book":
+        try:
+            instrument = "EUR_USD"
+            position_book = get_position_book(instrument)
+            # Add the position book to the messages as a system message
+            messages.append({"role": "system", "content": f"Position book: {position_book}"})
+        except Exception as e:
+            # If there was an error getting the position book, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_accounts":
+        try:
+            accounts = get_accounts()
+            # Add the accounts to the messages as a system message
+            messages.append({"role": "system", "content": f"Accounts: {accounts}"})
+        except Exception as e:
+            # If there was an error getting the accounts, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_account_summary":
+        try:
+            account_summary = get_account_summary(ACCOUNT_ID)
+            # Add the account summary to the messages as a system message
+            messages.append({"role": "system", "content": f"Account summary: {account_summary}"})
+        except Exception as e:
+            # If there was an error getting the account summary, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_account_instruments":
+        try:
+            account_instruments = get_account_instruments(ACCOUNT_ID)
+            # Add the account instruments to the messages as a system message
+            messages.append({"role": "system", "content": f"Account instruments: {account_instruments}"})
+        except Exception as e:
+            # If there was an error getting the account instruments, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "set_account_configuration":
+        try:
+            configuration = {
+                "alias": "My Account"
+            }
+            set_account_configuration(ACCOUNT_ID, configuration)
+            # Add a success message to the messages as a system message
+            messages.append({"role": "system", "content": "Account configuration updated successfully."})
+        except Exception as e:
+            # If there was an error setting the account configuration, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+      # Implement other endpoint conditions here...
+    elif matched_endpoint == "get_account_changes":
+        since_transaction_id = "6358"
+        try:
+            account_changes = get_account_changes(ACCOUNT_ID, since_transaction_id)
+            # Add the account changes to the messages as a system message
+            messages.append({"role": "system", "content": f"Account changes: {account_changes}"})
+        except Exception as e:
+            # If there was an error getting the account changes, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "create_order":
+        order_data = {
+            "order": {
+                "units": "100",
+                "instrument": "EUR_USD",
+                "timeInForce": "FOK",
+                "type": "MARKET",
+                "positionFill": "DEFAULT"
+            }
+        }
+        try:
+            order_response = create_order(ACCOUNT_ID, order_data)
+            # Add the order response to the messages as a system message
+            messages.append({"role": "system", "content": f"Order response: {order_response}"})
+        except Exception as e:
+            # If there was an error creating the order, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_orders":
+        try:
+            orders = get_orders(ACCOUNT_ID)
+            # Add the orders to the messages as a system message
+            messages.append({"role": "system", "content": f"Orders: {orders}"})
+        except Exception as e:
+            # If there was an error getting the orders, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_pending_orders":
+        try:
+            pending_orders = get_pending_orders(ACCOUNT_ID)
+            # Add the pending orders to the messages as a system message
+            messages.append({"role": "system", "content": f"Pending orders: {pending_orders}"})
+        except Exception as e:
+            # If there was an error getting the pending orders, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+
+    elif matched_endpoint == "get_pending_orders":
+        try:
+            pending_orders = get_pending_orders(ACCOUNT_ID)
+            # Add the pending orders to the messages as a system message
+            messages.append({"role": "system", "content": f"Pending orders: {pending_orders}"})
+        except Exception as e:
+            # If there was an error getting the pending orders, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_order_details":
+        order_id = "123456"
+        try:
+            order_details = get_order_details(ACCOUNT_ID, order_id)
+            # Add the order details to the messages as a system message
+            messages.append({"role": "system", "content": f"Order details: {order_details}"})
+        except Exception as e:
+            # If there was an error getting the order details, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "replace_order":
+        order_id = "123456"
+        order_data = {
+            "order": {
+                "units": "200",
+                "timeInForce": "GTC"
+            }
+        }
+        try:
+            replaced_order = replace_order(ACCOUNT_ID, order_id, order_data)
+            # Add the replaced order to the messages as a system message
+            messages.append({"role": "system", "content": f"Replaced order: {replaced_order}"})
+        except Exception as e:
+            # If there was an error replacing the order, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "cancel_order":
+        order_id = "123456"
+        try:
+            cancel_response = cancel_order(ACCOUNT_ID, order_id)
+            # Add the cancel response to the messages as a system message
+            messages.append({"role": "system", "content": f"Cancel response: {cancel_response}"})
+        except Exception as e:
+            # If there was an error canceling the order, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "update_order_extensions":
+        order_id = "123456"
+        extension_data = {
+            "takeProfit": {
+                "timeInForce": "GTC",
+                "price": "1.5"
+            }
+        }
+        try:
+            updated_extensions = update_order_extensions(ACCOUNT_ID, order_id, extension_data)
+            # Add the updated extensions to the messages as a system message
+            messages.append({"role": "system", "content": f"Updated extensions: {updated_extensions}"})
+        except Exception as e:
+            # If there was an error updating the order extensions, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_trades":
+        try:
+            trades = get_trades(ACCOUNT_ID)
+            # Add the trades to the messages as a system message
+            messages.append({"role": "system", "content": f"Trades: {trades}"})
+        except Exception as e:
+            # If there was an error getting the trades, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_open_trades":
+        try:
+            open_trades = get_open_trades(ACCOUNT_ID)
+            # Add the open trades to the messages as a system message
+            messages.append({"role": "system", "content": f"Open trades: {open_trades}"})
+        except Exception as e:
+            # If there was an error getting the open trades, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_trade_details":
+        trade_id = "123456"
+        try:
+            trade_details = get_trade_details(ACCOUNT_ID, trade_id)
+            # Add the trade details to the messages as a system message
+            messages.append({"role": "system", "content": f"Trade details: {trade_details}"})
+        except Exception as e:
+            # If there was an error getting the trade details, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "close_trade":
+        trade_id = "123456"
+        try:
+            close_response = close_trade(ACCOUNT_ID, trade_id)
+            # Add the close response to the messages as a system message
+            messages.append({"role": "system", "content": f"Close response: {close_response}"})
+        except Exception as e:
+            # If there was an error closing the trade, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "update_trade_extensions":
+        trade_id = "123456"
+        extension_data = {
+            "stopLoss": {
+                "timeInForce": "GTC",
+                "price": "1.2"
+            }
+        }
+        try:
+            updated_extensions = update_trade_extensions(ACCOUNT_ID, trade_id, extension_data)
+            # Add the updated extensions to the messages as a system message
+            messages.append({"role": "system", "content": f"Updated extensions: {updated_extensions}"})
+        except Exception as e:
+            # If there was an error updating the trade extensions, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "update_trade_orders":
+        trade_id = "123456"
+        orders_data = {
+            "takeProfit": {
+                "price": "1.5"
+            }
+        }
+        try:
+            updated_orders = update_trade_orders(ACCOUNT_ID, trade_id, orders_data)
+            # Add the updated orders to the messages as a system message
+            messages.append({"role": "system", "content": f"Updated orders: {updated_orders}"})
+        except Exception as e:
+            # If there was an error updating the trade orders, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+
+    elif matched_endpoint == "get_trades":
+        try:
+            trades = get_trades(ACCOUNT_ID)
+            # Add the trades to the messages as a system message
+            messages.append({"role": "system", "content": f"Trades: {trades}"})
+        except Exception as e:
+            # If there was an error getting the trades, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_open_trades":
+        try:
+            open_trades = get_open_trades(ACCOUNT_ID)
+            # Add the open trades to the messages as a system message
+            messages.append({"role": "system", "content": f"Open trades: {open_trades}"})
+        except Exception as e:
+            # If there was an error getting the open trades, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_trade_details":
+        trade_id = "123456"
+        try:
+            trade_details = get_trade_details(ACCOUNT_ID, trade_id)
+            # Add the trade details to the messages as a system message
+            messages.append({"role": "system", "content": f"Trade details: {trade_details}"})
+        except Exception as e:
+            # If there was an error getting the trade details, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "close_trade":
+        trade_id = "123456"
+        try:
+            close_response = close_trade(ACCOUNT_ID, trade_id)
+            # Add the close response to the messages as a system message
+            messages.append({"role": "system", "content": f"Close response: {close_response}"})
+        except Exception as e:
+            # If there was an error closing the trade, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "update_trade_extensions":
+        trade_id = "123456"
+        extension_data = {
+            "stopLoss": {
+                "timeInForce": "GTC",
+                "price": "1.2"
+            }
+        }
+        try:
+            updated_extensions = update_trade_extensions(ACCOUNT_ID, trade_id, extension_data)
+            # Add the updated extensions to the messages as a system message
+            messages.append({"role": "system", "content": f"Updated extensions: {updated_extensions}"})
+        except Exception as e:
+            # If there was an error updating the trade extensions, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "update_trade_orders":
+        trade_id = "123456"
+        orders_data = {
+            "takeProfit": {
+                "price": "1.5"
+            }
+        }
+        try:
+            updated_orders = update_trade_orders(ACCOUNT_ID, trade_id, orders_data)
+            # Add the updated orders to the messages as a system message
+            messages.append({"role": "system", "content": f"Updated orders: {updated_orders}"})
+        except Exception as e:
+            # If there was an error updating the trade orders, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_positions":
+        try:
+            positions = get_positions(ACCOUNT_ID)
+            # Add the positions to the messages as a system message
+            messages.append({"role": "system", "content": f"Positions: {positions}"})
+        except Exception as e:
+            # If there was an error getting the positions, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_open_positions":
+        try:
+            open_positions = get_open_positions(ACCOUNT_ID)
+            # Add the open positions to the messages as a system message
+            messages.append({"role": "system", "content": f"Open positions: {open_positions}"})
+        except Exception as e:
+            # If there was an error getting the open positions, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_position_details":
+        position_id = "123456"
+        try:
+            position_details = get_position_details(ACCOUNT_ID, position_id)
+            # Add the position details to the messages as a system message
+            messages.append({"role": "system", "content": f"Position details: {position_details}"})
+        except Exception as e:
+            # If there was an error getting the position details, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "close_position":
+        position_id = "123456"
+        try:
+            close_response = close_position(ACCOUNT_ID, position_id)
+            # Add the close response to the messages as a system message
+            messages.append({"role": "system", "content": f"Close response: {close_response}"})
+        except Exception as e:
+            # If there was an error closing the position, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_transactions":
+        try:
+            transactions = get_transactions(ACCOUNT_ID)
+            # Add the transactions to the messages as a system message
+            messages.append({"role": "system", "content": f"Transactions: {transactions}"})
+        except Exception as e:
+            # If there was an error getting the transactions, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_transaction_details":
+        transaction_id = "123456"
+        try:
+            transaction_details = get_transaction_details(ACCOUNT_ID, transaction_id)
+            # Add the transaction details to the messages as a system message
+            messages.append({"role": "system", "content": f"Transaction details: {transaction_details}"})
+        except Exception as e:
+            # If there was an error getting the transaction details, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_transactions_id_range":
+        start_id = "123456"
+        end_id = "123460"
+        try:
+            transactions_range = get_transactions_id_range(ACCOUNT_ID, start_id, end_id)
+            # Add the transactions within the ID range to the messages as a system message
+            messages.append({"role": "system", "content": f"Transactions range: {transactions_range}"})
+        except Exception as e:
+            # If there was an error getting the transactions within the ID range, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_transactions_since_id":
+        since_id = "123456"
+        try:
+            transactions_since_id = get_transactions_since_id(ACCOUNT_ID, since_id)
+            # Add the transactions since the ID to the messages as a system message
+            messages.append({"role": "system", "content": f"Transactions since ID: {transactions_since_id}"})
+        except Exception as e:
+            # If there was an error getting the transactions since the ID, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_transaction_stream":
+        try:
+            transaction_stream = get_transaction_stream(ACCOUNT_ID)
+            # Add the transaction stream to the messages as a system message
+            messages.append({"role": "system", "content": f"Transaction stream: {transaction_stream}"})
+        except Exception as e:
+            # If there was an error getting the transaction stream, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_latest_candles":
+        instrument = "EUR_USD"
+        try:
+            latest_candles = get_latest_candles(instrument)
+            # Add the latest candles to the messages as a system message
+            messages.append({"role": "system", "content": f"Latest candles: {latest_candles}"})
+        except Exception as e:
+            # If there was an error getting the latest candles, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_pricing":
+        instrument = "EUR_USD"
+        try:
+            pricing = get_pricing(instrument)
+            # Add the pricing to the messages as a system message
+            messages.append({"role": "system", "content": f"Pricing: {pricing}"})
+        except Exception as e:
+            # If there was an error getting the pricing, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_pricing_stream":
+        instrument = "EUR_USD"
+        try:
+            pricing_stream = get_pricing_stream(instrument)
+            # Add the pricing stream to the messages as a system message
+            messages.append({"role": "system", "content": f"Pricing stream: {pricing_stream}"})
+        except Exception as e:
+            # If there was an error getting the pricing stream, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
+    elif matched_endpoint == "get_instrument_candles":
+        instrument = "EUR_USD"
+        try:
+            instrument_candles = get_instrument_candles(instrument)
+            # Add the instrument candles to the messages as a system message
+            messages.append({"role": "system", "content": f"Instrument candles: {instrument_candles}"})
+        except Exception as e:
+            # If there was an error getting the instrument candles, add that to the messages
+            messages.append({"role": "system", "content": str(e)})
+
     else:
         messages.append({"role": "user", "content": user_input})
 
+       
     # Check if the token count exceeds the limit
     token_count = sum(len(message["content"].split()) for message in messages)
     if token_count >= MAX_TOKENS:
         # Start a new conversation with the initial prompt
-        messages = [{"role": "system", "content": "Initial prompt"}]
+        messages = [{"role": "system", "content": "greeting_message"}]
 
     # Generate a response using OpenAI's GPT-3
     response = openai.ChatCompletion.create(
@@ -641,3 +1084,4 @@ while True:
     messages.append({"role": "assistant", "content": assistant_response})
 
     print_with_voice(assistant_response)
+    
