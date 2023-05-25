@@ -1084,3 +1084,19 @@ while True:
 
     print_with_voice(assistant_response)
     
+# Create a Gradio interface
+iface = gr.Interface(
+    fn=get_user_input,
+    inputs="text",
+    outputs="text",
+    title="Trading Pal 1.0",
+    description="An AI trading assistant",
+    allow_screenshot=True,
+    allow_flagging=True,
+    examples=[
+        ["What is the current market condition?"]
+    ]
+)
+
+# Run the Gradio interface
+iface.launch()
