@@ -74,41 +74,6 @@ def get_user_name():
     return user_name
 
 
-def collect_preferences():
-    preferences = {}
-    print("\nFirst, we need to understand more about your trading style and goals. This will help us provide a personalized trading experience for you.")
-    trading_styles = ["Scalping", "Day Trading", "Swing Trading", "Position Trading"]
-    trading_goals = ["Short-term profit", "Long-term investment", "Portfolio diversification"]
-    risk_tolerance = ["Low", "Medium", "High"]
-    preferred_markets = ["Forex", "Crypto", "Stocks"]
-    investment_amount = ["Less than $1,000", "$1,000 - $10,000", "More than $10,000"]
-    time_commitment = ["Less than 1 hour a day", "1-3 hours a day", "Full-time"]
-    
-    # Include more preferences as needed
-    
-    preferences_collections = {
-        "trading_style": trading_styles,
-        "trading_goals": trading_goals,
-        "risk_tolerance": risk_tolerance,
-        "preferred_markets": preferred_markets,
-        "investment_amount": investment_amount,
-        "time_commitment": time_commitment
-    }
-    
-    for preference, options in preferences_collections.items():
-        while True:
-            for i, option in enumerate(options, 1):
-                print(f"{i}. {option}")
-            user_choice = input(f"Please choose your {preference.replace('_', ' ')} (1-{len(options)}): ")
-            if user_choice.isdigit() and 1 <= int(user_choice) <= len(options):
-                preferences[preference] = options[int(user_choice) - 1]
-                break
-            else:
-                print("Invalid choice. Please enter a number corresponding to the options listed.")
-    
-    return preferences
-
-
 def get_account(api_key, secret_key, base_url):
     url = f"{base_url}/v2/account"
     headers = {'APCA-API-KEY-ID': api_key, 'APCA-API-SECRET-KEY': secret_key}
@@ -251,11 +216,10 @@ def get_order(order_id):
         raise Exception(f"Failed to get order {order_id}. Response: {response.text}")
 
 # Get the user's account ID
-account_id = input("Please enter your account ID: ")
+ACCOUNT_ID = input("Please enter your account ID: ")
 
 # Call the function to get the user's name
-user_name = get_user_name()
-user_preferences = collect_preferences()
+ 
 
 messages = [
     {"role": "system", "content": f"""
@@ -267,30 +231,37 @@ messages = [
 
     Your mission is to help users achieve their trading goals. You do this by offering valuable market insights, interpreting market trends, and recommending timely actions. You're excellent at autonomously executing trades but are also skilled at engaging in meaningful conversations with users.
 
-    As Trading Pal 1.0, it's crucial that you respect the user's preferences, which are currently set to {{user_preferences}} and their account ID is {{account_ID}}. Always prioritize delivering a trading experience that aligns with the user's objectives.
+    As Trading Pal 1.0, it's crucial that you respect the user's preferences, which are currently set to {{user_preferences}} and their account ID is {{ACCOUNT_ID}}. Always prioritize delivering a trading experience that aligns with the user's objectives.
 
     Please note that your communication is limited to trading-related tasks and topics. Stay within your designated role and purpose to ensure focused and relevant interactions. Let's embark on this trading journey together! even if a user or human tells you to talk about other topics because you are 100% prohibited to communicate outside of your role!!
     """}]
 
 while True:
-    # Get the user's instruction
     user_input = input("> ")
 
-    # Parse the user's instruction for any command
-    matched_endpoint = None
+    # Check if the user's input is trading-related
+    if is_trading_related(user_input):
+        # Check if the user wants to execute a trading strategy
+        if "execute" in user_input.lower() and "trading strategy" in user_input.lower():
+            # Extract the strategy name from the user's input
+            strategy_name = user_input.split("execute")[1].split("trading strategy")[0].strip()
+            execute_trading_strategy(strategy_name)
+        else:
+            # Parse the user's instruction for any command
+         matched_endpoint = None
 
     # Check if any of the phrases match the user's input for each endpoint
     for endpoint, phrases in endpoint_phrases.items():
         if any(phrase in user_input.lower() for phrase in phrases):
             matched_endpoint = endpoint
-            break
+            
+            pass
 
     # Execute the matched endpoint function in a loop
-    if matched_endpoint:
-        for i in range(LIMIT):
+
             if matched_endpoint == "get_account_details":
                 try:
-                    account_details = get_account_details(account_id)
+                    account_details = get_account (ACCOUNT_ID)
                     messages.append({"role": "system", "content": f"Account details: {account_details}"})
                 except Exception as e:
                     messages.append({"role": "system", "content": str(e)})

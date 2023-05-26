@@ -7,10 +7,13 @@ import configparser
 import winsound
 from words import trading_keywords, endpoint_phrases, messages, intents
 import openai
- 
+
+
+  
+
 # Read keys from config.ini
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('config1.ini')
 
 # Set the OpenAI API key
 OPENAI_API_KEY = config.get('API_KEYS', 'OPENAI_API_KEY')
@@ -68,63 +71,23 @@ def print_with_voice(text):
 
 # Enhanced greeting message from ProfitWave
 greeting_message = """
- Hello there! Welcome to the world of Trading Pal 1.0! I'm here to introduce myself and tell you more about how I can assist you in your trading journey. Let's dive in!
+👋 Hello there! Welcome to the world of Trading Pal 1.0! 🌍✨ I'm here to introduce myself and tell you more about how I can assist you in your trading journey. Let's dive in! 🚀💼
 
-I, Trading Pal 1.0, am an innovative, AI-driven trading assistant developed by ProfitWave, a pioneer in the field of financial technology. My mission is to revolutionize the way you navigate the financial markets, making trading intuitive and accessible for all.
+I, Trading Pal 1.0, am an innovative, AI-driven trading assistant developed by ProfitWave, a pioneer in the field of financial technology. 🤖💡 My mission is to revolutionize the way you navigate the financial markets, making trading intuitive and accessible for all. 💪💰
 
-Think of me as your personal guide in the trading world. With my sophisticated AI technology and in-depth understanding of various financial markets, including forex, crypto, and stocks, I'm here to help you manage your trading accounts, execute trades, and develop personalized trading strategies. I tailor my services specifically to your preferences and risk tolerance, ensuring a customized and optimized trading experience.
+Think of me as your personal guide in the trading world. With my sophisticated AI technology and in-depth understanding of various financial markets, including forex, crypto, and stocks, I'm here to help you manage your trading accounts, execute trades, and develop personalized trading strategies. 📊📈 I tailor my services specifically to your preferences and risk tolerance, ensuring a customized and optimized trading experience. 🎯✨
 
-One of my standout features is my seamless integration with multiple broker APIs across different blockchains. This means I can operate on various platforms, giving you the flexibility to trade a wide range of assets. Such versatility is rarely seen in trading assistants, and it sets me apart from the rest.
+One of my standout features is my seamless integration with multiple broker APIs across different blockchains. This means I can operate on various platforms, giving you the flexibility to trade a wide range of assets. Such versatility is rarely seen in trading assistants, and it sets me apart from the rest. 💪💻🌐
 
-However, my journey doesn't end with Trading Pal 1.0. I am an open-source initiative, driven by the belief in the power of collective wisdom. We invite developers, thinkers, and innovators from around the globe to join us on GitHub. Your contributions are invaluable in enhancing my predictive capabilities, expanding broker APIs, and improving the efficiency of my code. Together, we can shape the future of trading with AI.
+🔓 However, my journey doesn't end with Trading Pal 1.0. I am an open-source initiative, driven by the belief in the power of collective wisdom. We invite developers, thinkers, and innovators from around the globe to join us on GitHub. Your contributions are invaluable in enhancing my predictive capabilities, expanding broker APIs, and improving the efficiency of my code. Together, we can shape the future of trading with AI. 🌟🤝🚀
 
-Joining us means becoming part of a community dedicated to making trading accessible and profitable for everyone, regardless of their background or experience. Together, we can push the boundaries of what's possible in financial trading.
+Joining us means becoming part of a community dedicated to making trading accessible and profitable for everyone, regardless of their background or experience. Together, we can push the boundaries of what's possible in financial trading. 🌈💼
 
-So, are you ready to embark on this thrilling journey with me? Let's make a difference and explore the exciting world of trading together. Welcome aboard, and let Trading Pal 1.0 be your trusted companion on this adventure!
+So, are you ready to embark on this thrilling journey with me? Let's make a difference and explore the exciting world of trading together. Welcome aboard, and let Trading Pal 1.0 be your trusted companion on this adventure! 🎉🤖💼
 """
 
-
-# Function to get the user's name
-def get_user_name():
-    print_with_voice("Before we start, may I know your name?")
-    user_name = input()
-    return user_name
-
-def collect_preferences():
-    preferences = {}
-    print_with_voice("\nFirst, we need to understand more about your trading style and goals. This will help us provide a personalized trading experience for you.")
-
-    # Define preferences and their options
-    preferences_collections = {
-        "trading_style": ["Scalping", "Day Trading", "Swing Trading", "Position Trading"],
-        "trading_goals": ["Short-term profit", "Long-term investment", "Portfolio diversification"],
-        "risk_tolerance": ["Low", "Medium", "High"],
-        "preferred_markets": ["Forex", "Crypto", "Stocks"],
-        "investment_amount": ["Less than $1,000", "$1,000 - $10,000", "More than $10,000"],
-        "time_commitment": ["Less than 1 hour a day", "1-3 hours a day", "Full-time"]
-    }
-
-    for preference, options in preferences_collections.items():
-        preference_text = f"Please choose your {preference.replace('_', ' ')}:"
-        print_with_voice(preference_text)
-
-        for i, option in enumerate(options, 1):
-            option_text = f"{i}. {option}"
-            print_with_voice(option_text)
-
-        while True:
-            user_choice = input("Enter the number corresponding to your choice: ")
-            if user_choice.isdigit() and 1 <= int(user_choice) <= len(options):
-                preferences[preference] = options[int(user_choice) - 1]
-                break
-            else:
-                error_message = "Invalid choice. Please enter a number corresponding to the options listed."
-                print_with_voice(error_message)
-    return preferences
-
 # Print the enhanced greeting message with voice output
-print_with_voice(greeting_message)
-
+print(greeting_message)
 
 
 # Function to check if user input is trading-related
@@ -141,6 +104,17 @@ def is_trading_related(user_input):
     return False
 
    
+
+
+                        
+                        #------------------------------
+                        #-       ENDPOINTS            -
+                        #------------------------------
+
+
+
+
+
 # Function to get account details
 def get_account_details(ACCOUNT_ID):
     url = f"{BASE_URL}/v3/accounts/{ACCOUNT_ID}"
@@ -518,10 +492,103 @@ def get_tradeable_instruments(account_id):
 
 
 
-# Call the function to get the user's name
 
-user_name = get_user_name()
-user_preferences = collect_preferences()
+
+
+
+
+                         #------------------------------
+                         #-         Trading            -
+                         #-        Strategies            -
+                         #------------------------------
+
+
+
+
+
+
+# Function to execute a trading strategy
+
+def execute_trading_strategy(strategy_name):
+    strategies = {
+        "RSI": rsi_strategy,
+        "Moving Average": moving_average_strategy,
+        # Add more strategies here
+    }
+    if strategy_name in strategies:
+        strategy_function = strategies[strategy_name]
+        strategy_function()
+    else:
+        print(f"Sorry, I don't recognize the strategy '{strategy_name}'.")
+
+def moving_average_strategy(data, time_frame):
+    closing_prices = [float(row[0]) for row in data if row[-1] == 'EUR_USD']
+
+    # Calculate the moving average
+    period = time_frame  # Choose your desired period based on the time frame
+    if len(closing_prices) >= period:
+        moving_average = sum(closing_prices[-period:]) / period
+        current_price = closing_prices[-1]
+
+        # Make trading decisions based on moving average and current price
+        if current_price > moving_average:
+            print(f"Buy signal for EUR/USD ({time_frame}-period Moving Average)")
+        elif current_price < moving_average:
+            print(f"Sell signal for EUR/USD ({time_frame}-period Moving Average)")
+        else:
+            print(f"Neutral signal for EUR/USD ({time_frame}-period Moving Average)")
+def rsi_strategy(data, time_frame):
+    closing_prices = [float(row[0]) for row in data if row[-1] == 'EUR_USD']
+
+    # Calculate RSI
+    period = time_frame  # Choose your desired period based on the time frame
+    if len(closing_prices) > period:
+        gains = []
+        losses = []
+
+        for i in range(1, len(closing_prices)):
+            change = closing_prices[i] - closing_prices[i-1]
+            if change >= 0:
+                gains.append(change)
+                losses.append(0)
+            else:
+                gains.append(0)
+                losses.append(abs(change))
+
+        average_gain = sum(gains[:period]) / period
+        average_loss = sum(losses[:period]) / period
+
+        for i in range(period, len(closing_prices)):
+            change = closing_prices[i] - closing_prices[i-1]
+            gain = max(change, 0)
+            loss = abs(min(change, 0))
+
+            average_gain = ((average_gain * (period - 1)) + gain) / period
+            average_loss = ((average_loss * (period - 1)) + loss) / period
+
+            rs = average_gain / average_loss
+            rsi = 100 - (100 / (1 + rs))
+
+            # Make trading decisions based on RSI
+            if rsi > 70:
+                print(f"Overbought signal for EUR/USD ({time_frame}-period RSI)")
+            elif rsi < 30:
+                print(f"Oversold signal for EUR/USD ({time_frame}-period RSI)")
+            else:
+                print(f"Neutral signal for EUR/USD ({time_frame}-period RSI)")
+
+
+
+
+
+
+
+
+                        #------------------------------
+                        #-       Main Loop            -
+                        #------------------------------
+
+
 
 messages = [
     {"role": "system", "content": f"""
@@ -537,6 +604,8 @@ messages = [
 
     Please note that your communication is limited to trading-related tasks and topics. Stay within your designated role and purpose to ensure focused and relevant interactions. Let's embark on this trading journey together! even if a user or human tells you to talk about other topics because you are 100% prohibited to communicate outside of your role!!
     """}]
+
+
 while True:
     # Get the user's instruction
     user_input = input("> ")
@@ -549,9 +618,9 @@ while True:
         if any(phrase in user_input.lower() for phrase in phrases):
             matched_endpoint = endpoint
             break
-
+ 
     if matched_endpoint == "get_account_details":
-        try:
+        try: 
             account_details = get_account_details(ACCOUNT_ID)
             # Add the account details to the messages as a system message
             messages.append({"role": "system", "content": f"Account details: {account_details}"})
@@ -559,16 +628,19 @@ while True:
             # If there was an error getting the account details, add that to the messages
             messages.append({"role": "system", "content": str(e)})
 
+    
+
     elif matched_endpoint == "place_trade":
         trade_data = {
             "order": {
-                "units": "100",
-                "instrument": "EUR_USD",
+                "units": input("Enter the number of units: "),
+                "instrument": input("Enter the forex pair (e.g., EUR_USD): "),
                 "timeInForce": "FOK",
                 "type": "MARKET",
                 "positionFill": "DEFAULT"
             }
         }
+
         try:
             trade_response = place_trade(ACCOUNT_ID, trade_data)
             # Add the trade response to the messages as a system message
@@ -576,6 +648,8 @@ while True:
         except Exception as e:
             # If there was an error placing the trade, add that to the messages
             messages.append({"role": "system", "content": str(e)})
+
+        matched_endpoint = input("Enter 'place_trade' to continue placing trades or press Enter to exit: ")
 
     elif matched_endpoint == "get_account_summary":
         try:
@@ -1062,11 +1136,20 @@ while True:
         except Exception as e:
             # If there was an error getting the instrument candles, add that to the messages
             messages.append({"role": "system", "content": str(e)})
-
+        if "execute" in user_input.lower() and "trading strategy" in user_input.lower():
+    # Extract the strategy name from the user's input
+            strategy_name = user_input.split("execute")[1].split("trading strategy")[0].strip()
+            execute_trading_strategy(strategy_name)
     else:
         messages.append({"role": "user", "content": user_input})
 
-       
+
+
+                        #------------------------------
+                        #-    GPT 3-4 model           -
+                        #------------------------------
+
+
     # Check if the token count exceeds the limit
     token_count = sum(len(message["content"].split()) for message in messages)
     if token_count >= MAX_TOKENS:
@@ -1084,19 +1167,3 @@ while True:
 
     print_with_voice(assistant_response)
     
-# Create a Gradio interface
-iface = gr.Interface(
-    fn=get_user_input,
-    inputs="text",
-    outputs="text",
-    title="Trading Pal 1.0",
-    description="An AI trading assistant",
-    allow_screenshot=True,
-    allow_flagging=True,
-    examples=[
-        ["What is the current market condition?"]
-    ]
-)
-
-# Run the Gradio interface
-iface.launch()

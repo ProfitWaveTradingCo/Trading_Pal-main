@@ -44,11 +44,12 @@ def download_forex_data(api_key, instrument, granularity, start, end, output_fil
 
 
 if __name__ == "__main__":
-    api_key = "620effdf7830ee7ca93f668147bbd71c-fb7b8385d044e4274a5bed321d34fcad"
+    api_key = "33a9e22e79a6afe67da0e568b0cca830-cf5e494dfe461d8704057859e229b74e"
     instrument = "EUR_USD"
-    granularity = "M1"
+
+    granularity = "S5", "M1","M5", "M15"
     start = "2023-01-01T00:00:00Z"
-    end = "2023-05-01T14:30:00Z"
-    output_file = r"C:\Users\kingp\OneDrive\Desktop\New folder\LSTM_FOREX_OANDA-main\forex_lstm\data\forex_data_now.csv"
+    end = "2023-05-25T14:30:00Z"
+    output_file = r"C:\Users\kingp\Downloads\Trading_Pal-main\forex_data_now.csv"
 
     download_forex_data(api_key, instrument, granularity, start, end, output_file)

@@ -1,4 +1,3 @@
-import subprocess
 import wave
 import requests
 import os
@@ -7,7 +6,13 @@ import configparser
 import winsound
 from words import trading_keywords, endpoint_phrases, messages, intents
 import openai
- 
+from oandapyV20 import API
+from oandapyV20.endpoints.pricing import PricingStream
+import csv
+import threading 
+
+
+
 # Read keys from config.ini
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -66,6 +71,8 @@ def print_with_voice(text):
     print(text)
     text_to_speech(text) 
 
+
+
 # Enhanced greeting message from ProfitWave
 greeting_message = """
  Hello there! Welcome to the world of Trading Pal 1.0! I'm here to introduce myself and tell you more about how I can assist you in your trading journey. Let's dive in!
@@ -82,6 +89,7 @@ Joining us means becoming part of a community dedicated to making trading access
 
 So, are you ready to embark on this thrilling journey with me? Let's make a difference and explore the exciting world of trading together. Welcome aboard, and let Trading Pal 1.0 be your trusted companion on this adventure!
 """
+
 
 
 # Function to get the user's name
@@ -121,6 +129,11 @@ def collect_preferences():
                 error_message = "Invalid choice. Please enter a number corresponding to the options listed."
                 print_with_voice(error_message)
     return preferences
+
+
+
+
+
 
 # Print the enhanced greeting message with voice output
 print_with_voice(greeting_message)
@@ -162,10 +175,6 @@ def place_trade(ACCOUNT_ID, trade_data):
     except requests.exceptions.HTTPError as err:
         raise Exception(f"Failed to place trade. Error: {err}")
 
-# Call the function to get the user's name
-
-user_name = get_user_name()
-user_preferences = collect_preferences()
 
 messages = [
     {"role": "system", "content": f"""

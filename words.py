@@ -27,7 +27,7 @@ endpoint_phrases = {
         "outline my account information"
     ],
     "place_trade": [
-        "What can you tell me about", "execute a trade", "enter a trade", "initiate a trade", "start a trade",
+        "place a trade", "execute a trade", "enter a trade", "initiate a trade", "start a trade",
         "establish a trade", "set a trade", "arrange a trade", "implement a trade",
         "proceed with a trade", "carry out a trade", "perform a trade", "organize a trade",
         "launch a trade", "put in a trade", "begin a trade", "kick off a trade", "activate a trade",
@@ -99,6 +99,26 @@ endpoint_phrases = {
         "expose account summary", "inspect account summary",
         "view account summary", "discover account summary",
         "outline account summary"
+    ],"create_order": [
+        "create an order", "place an order", "execute an order",
+        "initiate an order", "start an order", "establish an order",
+        "set up an order", "arrange an order", "implement an order",
+        "proceed with an order", "carry out an order",
+        "open a new order", "generate a trading order",
+        "submit a buy/sell order", "issue a market order",
+        "execute a limit order", "place a stop order",
+        "create a pending order", "initiate a take profit order",
+        "start a stop loss order", "establish a trailing stop order",
+        "set up a market order", "arrange a limit order",
+        "implement a stop order", "proceed with a pending order",
+        "carry out a take profit order", "open a stop loss order",
+        "generate a trailing stop order", "submit an order request",
+        "issue an order execution", "execute a pending order",
+        "place a take profit order", "create a stop loss order",
+        "initiate a trailing stop order", "start a market order",
+        "establish a limit order", "set up a stop order",
+        "arrange a pending order", "implement a take profit order",
+        "proceed with a stop loss order", "carry out a trailing stop order"
     ],
     "get_account_instruments": [
         "get account instruments", "fetch account instruments",
@@ -137,27 +157,7 @@ endpoint_phrases = {
         "view account changes", "discover account changes",
         "outline account changes"
     ],
-    "create_order": [
-        "create an order", "place an order", "execute an order",
-        "initiate an order", "start an order", "establish an order",
-        "set up an order", "arrange an order", "implement an order",
-        "proceed with an order", "carry out an order",
-        "open a new order", "generate a trading order",
-        "submit a buy/sell order", "issue a market order",
-        "execute a limit order", "place a stop order",
-        "create a pending order", "initiate a take profit order",
-        "start a stop loss order", "establish a trailing stop order",
-        "set up a market order", "arrange a limit order",
-        "implement a stop order", "proceed with a pending order",
-        "carry out a take profit order", "open a stop loss order",
-        "generate a trailing stop order", "submit an order request",
-        "issue an order execution", "execute a pending order",
-        "place a take profit order", "create a stop loss order",
-        "initiate a trailing stop order", "start a market order",
-        "establish a limit order", "set up a stop order",
-        "arrange a pending order", "implement a take profit order",
-        "proceed with a stop loss order", "carry out a trailing stop order"
-    ],
+    
      "get_orders": [
         "get orders", "fetch orders", "retrieve orders",
         "list all orders", "show my orders", "get my order list",

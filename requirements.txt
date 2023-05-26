@@ -10,3 +10,6 @@ oandapyV20
 python-dateutil
 wave
 configparser
+sqlite3 
+oandapyV20
+
