@@ -92,7 +92,7 @@ google-auth==2.19.0
 google-auth-httplib2==0.1.0
 googleapis-common-protos==1.59.0
 gpt==0.2
-gradio==3.33.1
+gradio==3.34.0
 gradio_client==0.2.5
 greenlet==2.0.2
 gTTS==2.3.1
