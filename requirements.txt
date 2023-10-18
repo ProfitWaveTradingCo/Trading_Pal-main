@@ -253,7 +253,7 @@ tzlocal==5.0.1
 uc-micro-py==1.0.2
 ujson==5.7.0
 uritemplate==4.1.1
-urllib3==1.26.16
+urllib3==1.26.18
 urllib3-secure-extra==0.1.0
 uvicorn==0.22.0
 v20==3.0.25.0
