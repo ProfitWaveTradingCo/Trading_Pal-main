@@ -266,7 +266,7 @@ webdriver-manager==3.8.6
 webencodings==0.5.1
 websocket-client==1.5.2
 websockets==11.0.3
-Werkzeug==2.3.4
+Werkzeug==3.0.1
 whisper==1.1.10
 win32-setctime==1.1.0
 wrapt==1.15.0
